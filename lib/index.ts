@@ -1,6 +1,7 @@
 import checkFileExist from './checkFileExist';
 import selectFrame from './selectFrame';
 import buildReactProject from './buildReactProject';
+import buildMiniProgrameProject from './buildMiniProgrameProject';
 import needTypescript from './needTypescript';
 import { FRAME_ENUM } from '../config';
 import clearConsole from '../utils/clearConsole';
@@ -16,10 +17,13 @@ async function create(name: string, options: Partial<Option>) {
     await checkFileExist(name, !!options.force);
     clearConsole();
     const frame = await selectFrame();
-    const hasTypescript = await needTypescript();
     switch (frame) {
       case FRAME_ENUM.react:
+        const hasTypescript = await needTypescript();
         await buildReactProject(name, hasTypescript);
+        break;
+      case FRAME_ENUM.miniPrograme:
+        await buildMiniProgrameProject(name);
         break;
       default:
         log.info('敬请期待');

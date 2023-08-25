@@ -5,11 +5,16 @@ export enum FRAME_ENUM {
   miniPrograme = '小程序',
 }
 
-export enum BUILD_TYPE_ENUM {
+export enum BUILD_REACT_TYPE_ENUM {
   cra = 'create react app',
   vite = 'create vite',
   umi = 'umi',
   custom = '自定义',
+}
+
+export enum BUILD_MINI_PROJECT_TYPE_ENUM {
+  taro = 'taro',
+  uniApp = 'uni-app',
 }
 
 // 框架
@@ -20,10 +25,16 @@ export const FRAMES = [
   FRAME_ENUM.miniPrograme,
 ];
 
-// 脚手架构建方式
+// react构建方式
 export const REACT_BUILD_TYPES = [
-  BUILD_TYPE_ENUM.cra,
-  BUILD_TYPE_ENUM.vite,
-  BUILD_TYPE_ENUM.umi,
-  BUILD_TYPE_ENUM.custom,
+  BUILD_REACT_TYPE_ENUM.cra,
+  BUILD_REACT_TYPE_ENUM.vite,
+  BUILD_REACT_TYPE_ENUM.umi,
+  BUILD_REACT_TYPE_ENUM.custom,
+];
+
+// 小程序构建方式
+export const MINI_PROJECT_BUILD_TYPES = [
+  BUILD_MINI_PROJECT_TYPE_ENUM.taro,
+  BUILD_MINI_PROJECT_TYPE_ENUM.uniApp,
 ];

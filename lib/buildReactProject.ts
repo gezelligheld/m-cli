@@ -1,8 +1,8 @@
 import inquirer from 'inquirer';
-import { execSync } from 'child_process';
+import * as shell from 'shelljs';
 
 import buildReactCustomProject from './buildReactCustomProject';
-import { REACT_BUILD_TYPES, BUILD_TYPE_ENUM } from '../config';
+import { REACT_BUILD_TYPES, BUILD_REACT_TYPE_ENUM } from '../config';
 import spinner from '../utils/spinner';
 import customExec from '../utils/customExec';
 
@@ -15,26 +15,26 @@ async function buildReactProject(name: string, hasTypescript: boolean) {
   });
   spinner.start('正在拉取项目');
   switch (buildType) {
-    case BUILD_TYPE_ENUM.cra:
+    case BUILD_REACT_TYPE_ENUM.cra:
       await customExec(
         `npx create-react-app ${name}${
           hasTypescript ? ' --template typescript' : ''
         }`
       );
       break;
-    case BUILD_TYPE_ENUM.vite:
+    case BUILD_REACT_TYPE_ENUM.vite:
       await customExec(
         `npm create vite ${name} --template ${
           hasTypescript ? 'react-ts' : 'react'
         }`
       );
       break;
-    case BUILD_TYPE_ENUM.umi:
-      execSync(`mkdir ${name}`);
-      execSync(`cd ${name}`);
+    case BUILD_REACT_TYPE_ENUM.umi:
+      shell.mkdir(name);
+      shell.cd(name);
       await customExec('npm create umi');
       break;
-    case BUILD_TYPE_ENUM.custom:
+    case BUILD_REACT_TYPE_ENUM.custom:
       await buildReactCustomProject(name);
       break;
     default:

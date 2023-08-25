@@ -22,6 +22,7 @@
 #### 调试
 
 ```bash
+npm run build
 # 软链到本地
 npm link
 m-cli create app

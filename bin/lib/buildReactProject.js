@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -13,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = __importDefault(require("inquirer"));
-const child_process_1 = require("child_process");
+const shell = __importStar(require("shelljs"));
 const buildReactCustomProject_1 = __importDefault(require("./buildReactCustomProject"));
 const config_1 = require("../config");
 const spinner_1 = __importDefault(require("../utils/spinner"));
@@ -28,18 +51,18 @@ function buildReactProject(name, hasTypescript) {
         });
         spinner_1.default.start('正在拉取项目');
         switch (buildType) {
-            case config_1.BUILD_TYPE_ENUM.cra:
+            case config_1.BUILD_REACT_TYPE_ENUM.cra:
                 yield (0, customExec_1.default)(`npx create-react-app ${name}${hasTypescript ? ' --template typescript' : ''}`);
                 break;
-            case config_1.BUILD_TYPE_ENUM.vite:
+            case config_1.BUILD_REACT_TYPE_ENUM.vite:
                 yield (0, customExec_1.default)(`npm create vite ${name} --template ${hasTypescript ? 'react-ts' : 'react'}`);
                 break;
-            case config_1.BUILD_TYPE_ENUM.umi:
-                (0, child_process_1.execSync)(`mkdir ${name}`);
-                (0, child_process_1.execSync)(`cd ${name}`);
+            case config_1.BUILD_REACT_TYPE_ENUM.umi:
+                shell.mkdir(name);
+                shell.cd(name);
                 yield (0, customExec_1.default)('npm create umi');
                 break;
-            case config_1.BUILD_TYPE_ENUM.custom:
+            case config_1.BUILD_REACT_TYPE_ENUM.custom:
                 yield (0, buildReactCustomProject_1.default)(name);
                 break;
             default:

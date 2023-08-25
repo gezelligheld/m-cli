@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const checkFileExist_1 = __importDefault(require("./checkFileExist"));
 const selectFrame_1 = __importDefault(require("./selectFrame"));
 const buildReactProject_1 = __importDefault(require("./buildReactProject"));
+const buildMiniProgrameProject_1 = __importDefault(require("./buildMiniProgrameProject"));
 const needTypescript_1 = __importDefault(require("./needTypescript"));
 const config_1 = require("../config");
 const clearConsole_1 = __importDefault(require("../utils/clearConsole"));
@@ -26,10 +27,13 @@ function create(name, options) {
             yield (0, checkFileExist_1.default)(name, !!options.force);
             (0, clearConsole_1.default)();
             const frame = yield (0, selectFrame_1.default)();
-            const hasTypescript = yield (0, needTypescript_1.default)();
             switch (frame) {
                 case config_1.FRAME_ENUM.react:
+                    const hasTypescript = yield (0, needTypescript_1.default)();
                     yield (0, buildReactProject_1.default)(name, hasTypescript);
+                    break;
+                case config_1.FRAME_ENUM.miniPrograme:
+                    yield (0, buildMiniProgrameProject_1.default)(name);
                     break;
                 default:
                     log_1.default.info('敬请期待');
